@@ -72,7 +72,9 @@ class FacebookSource extends FaceSourceAbstract
 	public function getImage() {
 		return $this->image;
 	}
+
+	public function getSource() {
+		return 'facebook';
+	}
+
 }
-
-
-?>

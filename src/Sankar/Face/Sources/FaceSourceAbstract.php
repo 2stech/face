@@ -60,4 +60,9 @@ abstract class FaceSourceAbstract
 	{
 
 	}
+
+	public function getSource()
+	{
+		return __CLASS__;
+	}
 }

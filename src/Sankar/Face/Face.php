@@ -57,6 +57,10 @@ class Face {
 		return $this->source->getImage();
 	}
 
+	public function getSource() {
+		return $this->source->getSource();
+	}
+
 	public function setConfig($options = array())
 	{
 		$this->options = array_merge($this->options,$options);
