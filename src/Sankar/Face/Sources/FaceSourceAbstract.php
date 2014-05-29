@@ -39,7 +39,7 @@ abstract class FaceSourceAbstract
 	 *
 	 * @var string
 	 */
-	protected $image = NULL;
+	protected $image = null;
 
 	public function __construct($email, $options = array())
 	{
@@ -49,10 +49,14 @@ abstract class FaceSourceAbstract
 	public function getUrl($url) {
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_HEADER, 1);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		$result = curl_exec($ch);
+		$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		curl_close($ch);
+		if($http_code != 200) {
+			return null;
+		}
 		return $result;
 	}
 

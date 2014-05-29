@@ -1,19 +1,21 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
 
-echo '<pre>';
-print_r($_REQUEST);
 
 $face = new \Sankar\Face\Face();
 $face->setConfig([
 	'sources' => [
-		'facebook' => ['appid'=>'249199871932396',
-		'secret' => '50b31c51a280d2523836cc3280da9d04'
-		],
-		//'gravatar' => []
+		'fullcontact' => ['apikey' => 'fea3e3d2824ab5a1'],
+		'vibeapp' => ['apikey' => '9db7844007fb72201898775dafee49e0'],
+		'gravatar' => [],
 	]
 	]);
-$face->find('sankar.suda@gmail.com');
 
-echo '<img src="' . $face->getImage() . '" />';
+$emails = array('sankar.suda@gmail.com','sankara.s@solutionsinfini.com','atmb4u@gmail.com');
+
+foreach ($emails as $email) {
+	$face->find('sankar.suda@gmail.com');
+	echo '<img src="' . $face->getImage() . '" alt="'.$face->getSource().'"/>';
+}
+
 ?>

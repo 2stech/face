@@ -1,7 +1,7 @@
 <?php
 
 /*                                                                        *
- * This script belongs to the "Sankar/Face.				              *
+ * This script belongs to the "Sankar/Faces.				              *
  *                                                                        *
  * It is free software; you can redistribute it and/or modify it under    *
  * the terms of the GNU General Public License as published by the Free   *
@@ -19,61 +19,49 @@
  *                                                                        *
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
-namespace Sankar\Face;
+namespace Sankar\Face\Sources;
 
+use Sankar\Face\Sources\FaceSourceAbstract;
 /**
  *
  */
-class Face {
+class VibeappSource extends FaceSourceAbstract
+{
 	/**
-	 * sources
+	 * BaseUrl
 	 *
-	 * @var array
+	 * @var string
 	 */
-	protected $options = array(
-		'sources' => [
-			//'Gravatar' => [],
-			'Facebook' => []
-		]
-	);
+	protected $baseUrl = 'https://vibeapp.co/api/v1/initial_data';
 
-	public function __construct($options = array())
-	{
+	protected $options = [
+		"width" => 140,
+		"height" => 140
+	];
+	
+	public function __construct($email, $options) {
+
 		$this->options = array_merge($this->options,$options);
-	}
 
-	public function find($email, $pfsource = null)
-	{
-		$options = $this->options;
+		$url = $this->baseUrl . '?email=' . $email .'&api_key='.$options['apikey'].'&force=1';
+		$response = $this->getUrl($url);
 
-		foreach ($options['sources'] as $source => $config) {
-			$config = (array)$options[$source];
-			$source = '\Sankar\\Face\Sources\\'.ucfirst($source).'Source';
-			$sourceObject = new $source($email, $config);
-			if ($sourceObject->getImage() !== null) {
-				break;
+		if (!empty($response)) {
+
+			$response = json_decode($response,true);
+			$status = $response['success'];
+			
+			if($status == 'true'){
+				$this->image = $response['profile_picture'];
 			}
 		}
-
-		$this->source = $sourceObject;
-		return $this->getImage();
 	}
 
 	public function getImage() {
-		return $this->source->getImage();
+		return $this->image;
 	}
 
 	public function getSource() {
-		return $this->source->getSource();
-	}
-
-	public function setConfig($options = array())
-	{
-		$this->options = array_merge($this->options,$options);
-	}
-
-	public function getConfig()
-	{
-		return $this->options;
+		return 'vibeapp';
 	}
 }
