@@ -50,7 +50,7 @@ class VibeappSource extends FaceSourceAbstract
 
 			$response = json_decode($response,true);
 			$status = $response['success'];
-			
+
 			if($status == 'true'){
 				$this->image = $response['profile_picture'];
 			}

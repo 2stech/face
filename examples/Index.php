@@ -14,7 +14,7 @@ $face->setConfig([
 $emails = array('sankar.suda@gmail.com','sankara.s@solutionsinfini.com','atmb4u@gmail.com');
 
 foreach ($emails as $email) {
-	$face->find('sankar.suda@gmail.com');
+	$face->find($email);
 	echo '<img src="' . $face->getImage() . '" alt="'.$face->getSource().'"/>';
 }
 

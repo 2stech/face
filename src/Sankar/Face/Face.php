@@ -47,7 +47,6 @@ class Face {
 		$options = $this->options;
 
 		foreach ($options['sources'] as $source => $config) {
-			$config = (array)$options[$source];
 			$source = '\Sankar\\Face\Sources\\'.ucfirst($source).'Source';
 			$sourceObject = new $source($email, $config);
 			if ($sourceObject->getImage() !== null) {
@@ -67,13 +66,11 @@ class Face {
 		return $this->source->getSource();
 	}
 
-	public function setConfig($options = array())
-	{
+	public function setConfig($options = array()) {
 		$this->options = array_merge($this->options,$options);
 	}
 
-	public function getConfig()
-	{
+	public function getConfig() {
 		return $this->options;
 	}
 }
